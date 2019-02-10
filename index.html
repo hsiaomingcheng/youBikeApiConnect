@@ -27,7 +27,15 @@
 
 
   <div id="app">
-    <station-name></station-name>
+    <div v-for="item in bikeDataArray">
+      <h4>{{item.sna}}</h4>
+    </div>
+
+    </br></br>
+
+    <!-- .prop的屬性在HTML上面是看不到的 -->
+    <div @click="changeDataEvent()" :control.prop="prev">prevClick</div></br>
+    <div @click="changeDataEvent()" :control.prop="next">nextClick</div>
   </div>
 
 
