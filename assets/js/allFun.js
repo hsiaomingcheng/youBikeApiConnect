@@ -4,11 +4,12 @@ Vue.config.devtools = true; //这步很重要
 var startVue = new Vue({
     el: '#app',
     data: {
-        bikeDataArray: [],
-        dataFile: [],
-        count: '',
-        maxCount : '',
-
+        bikeDataArray: [],  //顯示的陣列
+        dataFile: [],       //放所有筆數的陣列
+        count: '',          //現在數
+        maxCount: '',       //最大數
+        showNum: 10,        //想顯示的筆數(預設10筆),
+        numInput: '',
         prev: 'prev',
         next: 'next',
     },
@@ -42,6 +43,18 @@ var startVue = new Vue({
             request.open('GET', 'https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=ddb80380-f1b3-4f8e-8016-7ed9cba571d5', true);
             request.send();
         },
+        changeShowNum: function(){
+            
+            if ( this.$refs.numInput.value == '' ) {
+                this.showNum = 0;
+            }else {
+                this.showNum = parseInt( this.$refs.numInput.value );
+            }
+
+            this.maxCount = Math.floor( this.dataFile.length / this.showNum );
+
+            this.changeDataEvent();
+        },
         changeDataEvent: function(){
             //動態切換事件
             // this.bikeDataArray = this.dataFile.slice(10, 20);
@@ -54,8 +67,8 @@ var startVue = new Vue({
                 this.count += 1;
             }
 
-            var head = (this.count * 10),
-                foot = (this.count * 10) + 10;
+            var head = (this.count * this.showNum),
+                foot = (this.count * this.showNum) + this.showNum;
 
             this.bikeDataArray = this.dataFile.slice(head, foot);
         }

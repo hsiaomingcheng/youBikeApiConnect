@@ -27,6 +27,13 @@
 
 
   <div id="app">
+    <div>
+      <input type="number" ref="numInput">
+      <div class="enterBtn" @click="changeShowNum()">enter</div>
+    </div>
+
+    </br></br>
+
     <div v-for="item in bikeDataArray">
       <h4>{{item.sna}}</h4>
     </div>
