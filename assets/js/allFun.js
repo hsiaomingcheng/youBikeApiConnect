@@ -3,21 +3,21 @@ Vue.config.devtools = true; //这步很重要
 
 
 /*
-台北市Youbike API
-sno：站點代號、
-sna：場站名稱(中文)、
-tot：場站總停車格、
-sbi：場站目前車輛數量、
-sarea：場站區域(中文)、
-mday：資料更新時間、
-lat：緯度、
-lng：經度、
-ar：地(中文)、
-sareaen：場站區域(英文)、
-snaen：場站名稱(英文)、
-aren：地址(英文)、
-bemp：空位數量、
-act：全站禁用狀態
+新北市Youbike API
+sno(站點代號)、
+sna(中文場站名稱)、
+tot(場站總停車格)、
+sbi(可借車位數)、
+sarea(中文場站區域)、
+mday(資料更新時間)、
+lat(緯度)、
+lng(經度)、
+ar(中文地址)、
+sareaen(英文場站區域)、
+snaen(英文場站名稱)、
+aren(英文地址)、
+bemp(可還空位數)、
+act(場站是否暫停營運)
 */
 
 var startVue = new Vue({
@@ -59,7 +59,7 @@ var startVue = new Vue({
                 }
             });
 
-            request.open('GET', 'http://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000352-001', true);
+            request.open('GET', 'https://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000352-001', true);
             request.send();
         },
         timerAjax: function(){
