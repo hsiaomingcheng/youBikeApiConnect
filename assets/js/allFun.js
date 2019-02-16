@@ -20,6 +20,7 @@ bemp(可還空位數)、
 act(場站是否暫停營運)
 */
 
+
 var startVue = new Vue({
     el: '#app',
     data: {
@@ -35,32 +36,24 @@ var startVue = new Vue({
     methods: {
         callAjax: function(){
             var obj = '';
-            var request = new XMLHttpRequest();
 
-            request.addEventListener("load", function(){
-                //回應狀態碼判斷  判斷是 2xx 的成功、3xx 的重新導向 或 4xx 客戶端錯誤
-                if (request.status >= 200 && request.status < 400) {
+            axios
+            .get('https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=ddb80380-f1b3-4f8e-8016-7ed9cba571d5')
+            .then(function (response) {
+                // handle success
+                console.log(response);
 
-                    // Success!
-                    // console.log(request.responseText);
+                
+                obj = response.data;
 
-                    //這裡的 this 等於 XMLHttpRequest
-                    //console.log(this); == XMLHttpRequest
+                startVue.dataFile = obj.result.results;
 
-                    //把對方回傳的資料轉成JSON格式
-                    obj = JSON.parse(request.responseText);
-
-                    startVue.dataFile = obj.result.results; //將取得的資料放入陣列
-
-                    if ( startVue.count == 0 ) {
-                        startVue.bikeDataArray = obj.result.results.slice(0, 10); //成功讀取後 先秀10筆資料
-                        startVue.maxCount = Math.floor( obj.result.count / 10 );
-                    }
+                if ( startVue.count == 0 ) {
+                    startVue.bikeDataArray = startVue.dataFile.slice(0, 10);
+                    startVue.maxCount = Math.floor( obj.result.count / 10 );
                 }
-            });
 
-            request.open('GET', 'https://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000352-001', true);
-            request.send();
+            });
         },
         timerAjax: function(){
 
@@ -103,7 +96,7 @@ var startVue = new Vue({
     mounted(){
         this.callAjax();
 
-        this.timerAjax();
+        // this.timerAjax();
     }
 });
 
