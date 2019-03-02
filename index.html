@@ -15,7 +15,7 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/ico/favicon.png">
 
   <!-- CSS -->
-  <!-- <link rel="stylesheet" href="../../assets/css/style.css"> -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
 
 </head>
 
@@ -24,22 +24,42 @@
 
 
   <div id="app">
-    <div>
-      <input type="number" ref="numInput">
-      <div class="enterBtn" @click="changeShowNum()">enter</div>
-    </div>
 
-    </br></br>
+    <section class="upLayer">
+      <div class="showArea upLayerBox">
+        <input type="number" ref="numInput" placeholder="10" :value="showNum">
+        <div class="enterBtn btnStyle" @click="changeShowNum()">確認</div>
+        <p>在欄位輸入希望顯示筆數，並按下確認鍵送出(預設為10筆)</p>
+      </div>
+      <div class="pageArea upLayerBox">
+        <!-- .prop的屬性在HTML上面是看不到的 -->
+        <div class="btn btnStyle" @click="changeDataEvent()" :control.prop="prev">上一頁</div>
+        <div class="btn btnStyle" @click="changeDataEvent()" :control.prop="next">下一頁</div>
+      </div>
+      <div class="upLayerBox">
+        <!-- <select-area v-for="text in area" :area="area"></select-area> -->
+        <select name="" id="" @change="selectDataEvent()" ref="selectValue">
+          <option v-for="areaName in area" :value="areaName">{{areaName}}</option>
+        </select>
+      </div>
+    </section>
 
-    <div v-for="item in bikeDataArray">
-      <h4>{{item.sna}}</h4>
-    </div>
+    <section class="downLayer">
+      <div class="dLeft">
+        <div class="bikeInfoBox" v-for="item in bikeDataArray">
+          <h4>{{item.sna}}</h4>
+          <p>{{item.sarea}}</p>
+          <h5>{{item.tot}}總停車格</h5>
+          <h5>{{item.sbi}}可借車數</h5>
+          <h5>{{item.bemp}}可還空位數</h5>
+          <br>
+        </div>
+      </div>
 
-    </br></br>
-
-    <!-- .prop的屬性在HTML上面是看不到的 -->
-    <div @click="changeDataEvent()" :control.prop="prev">prevClick</div></br>
-    <div @click="changeDataEvent()" :control.prop="next">nextClick</div>
+      <div class="dRight">
+        <!--用來放勾選選項的地方-->
+      </div>
+    </section>
   </div>
 
 
