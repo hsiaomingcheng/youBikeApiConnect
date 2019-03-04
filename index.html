@@ -15,7 +15,7 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/ico/favicon.png">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
 
 </head>
 
@@ -36,7 +36,7 @@
         <div class="btn btnStyle" @click="changeDataEvent()" :control.prop="prev">上一頁</div>
         <div class="btn btnStyle" @click="changeDataEvent()" :control.prop="next">下一頁</div>
       </div>
-      <div class="upLayerBox">
+      <div class="selectArea upLayerBox">
         <!-- <select-area v-for="text in area" :area="area"></select-area> -->
         <select name="" id="" @change="selectDataEvent()" ref="selectValue">
           <option v-for="areaName in area" :value="areaName">{{areaName}}</option>
@@ -47,17 +47,24 @@
     <section class="downLayer">
       <div class="dLeft">
         <div class="bikeInfoBox" v-for="item in bikeDataArray">
-          <h4>{{item.sna}}</h4>
-          <p>{{item.sarea}}</p>
-          <h5>{{item.tot}}總停車格</h5>
-          <h5>{{item.sbi}}可借車數</h5>
-          <h5>{{item.bemp}}可還空位數</h5>
+          <p style="display:none;" data-name="sna">{{item.sna}}</p>
+          <p style="display:none;" data-name="sno">{{item.sno}}(站點代號)</p>
+          <p style="display:none;" data-name="sarea">{{item.sarea}}</p>
+          <p style="display:none;" data-name="ar">{{item.ar}}</p>
+          <p style="display:none;" data-name="sbi">{{item.sbi}}可借車數</p>
+          <p style="display:none;" data-name="bemp">{{item.bemp}}可還空位數</p>
+          <p style="display:none;" data-name="tot">{{item.tot}}總停車格</p>
+          <p style="display:none;" data-name="sareaen">{{item.sareaen}}</p>
+          <p style="display:none;" data-name="snaen">{{item.snaen}}</p>
+          <p style="display:none;" data-name="aren">{{item.aren}}</p>
+          <p style="display:none;" data-name="act">{{item.act}}</p>
           <br>
         </div>
       </div>
 
       <div class="dRight">
         <!--用來放勾選選項的地方-->
+        <check-box-area></check-box-area>
       </div>
     </section>
   </div>

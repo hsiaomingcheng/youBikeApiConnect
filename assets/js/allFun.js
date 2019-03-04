@@ -21,6 +21,88 @@ act(場站是否暫停營運)
 */
 
 
+Vue.component('check-box-area', {
+    data(){
+        return {
+            checkNames: [],
+            ids: [
+                {
+                    id: 'sno',
+                    text: '站點代號'
+                },
+                {
+                    id: 'sna',
+                    text: '中文場站名稱'
+                },
+                {
+                    id: 'tot',
+                    text: '場站總停車格'
+                },
+                {
+                    id: 'sbi',
+                    text: '可借車位數'
+                },
+                {
+                    id: 'sarea',
+                    text: '中文場站區域'
+                },
+                {
+                    id: 'ar',
+                    text: '中文地址'
+                },
+                {
+                    id: 'sareaen',
+                    text: '英文場站區域'
+                },
+                {
+                    id: 'snaen',
+                    text: '英文場站名稱'
+                },
+                {
+                    id: 'aren',
+                    text: '英文地址'
+                },
+                {
+                    id: 'bemp',
+                    text: '可還空位數'
+                },
+                {
+                    id: 'act',
+                    text: '場站是否暫停營運'
+                }
+            ]
+        }
+    },
+    methods: {
+        inputCheck: function(){
+            // console.log(event.target.value);
+
+            var name  = '[data-name="'+ event.target.value +'"]',
+                named = document.querySelectorAll(name);
+
+            var etValue = event.target.value;
+
+            for (var index = 0; index < startVue.filed.length; index++) {
+                if ( startVue.filed[index] === etValue ) {
+
+                    startVue.filed.splice(index, 1);
+                    for (var index = 0; index < named.length; index++) {
+                        named[index].style.display = "none";
+                    }
+                    return
+                }else if ( index + 1 == startVue.filed.length && startVue.filed[index] !== etValue ) {
+
+                    startVue.filed.push( etValue );
+                    for (var index = 0; index < named.length; index++) {
+                        named[index].style.display = "block";
+                    }
+                }
+            }
+        }
+    },
+    template: '<ul><li v-for="list in ids"><input type="checkbox" :value="list.id" v-model="checkNames" @change="inputCheck()">{{list.text}}</li></ul>',
+});
+
 
 var startVue = new Vue({
     el: '#app',
@@ -31,6 +113,7 @@ var startVue = new Vue({
         count: 0,           //現在數
         maxCount: '',       //最大數
         showNum: 10,        //想顯示的筆數(預設10筆),
+        filed: ['sna','sbi','bemp','tot'],     //顯示的欄位(預設sna可以看到)
         numInput: '',
         prev: 'prev',
         next: 'next',
@@ -60,8 +143,19 @@ var startVue = new Vue({
                 if ( startVue.count == 0 ) {
                     startVue.bikeDataArray = startVue.dataFileBox.slice(0, 10);
                     startVue.maxCount = Math.floor( obj.result.total / 10 );
+
+                    //對預設顯示的欄位所對應的checkbox打勾
+                    var dRight = document.querySelector('.dRight'),
+                        li     = dRight.querySelectorAll('li');
+
+                    for (let index = 0; index < startVue.filed.length; index++) {
+                        dRight.querySelectorAll('li input[value="'+ startVue.filed[index] +'"]')[0].checked = true;
+                    }
                 }
 
+                setTimeout(function(){
+                    startVue.showFiledEvent();
+                }, 0);
             });
         },
         timerAjax: function(){
@@ -100,6 +194,10 @@ var startVue = new Vue({
                 foot = (this.count * this.showNum) + this.showNum;
 
             this.bikeDataArray = this.dataFile.slice(head, foot);
+
+            setTimeout(function(){
+                startVue.showFiledEvent();
+            }, 0);
         },
         selectDataEvent: function(){
             var tempArray = [],
@@ -120,6 +218,19 @@ var startVue = new Vue({
     
                 this.dataFile = tempArray;
                 this.changeShowNum();
+            }
+        },
+        showFiledEvent: function(){
+            //預設顯示欄位事件
+            for (var index = 0; index < startVue.filed.length; index++) {
+                var dataName = startVue.filed[index];
+
+                var name  = '[data-name="'+ dataName +'"]',
+                    named = document.querySelectorAll( name );
+
+                for (var index2 = 0; index2 < named.length; index2++) {
+                    named[index2].style.display = "block";
+                }
             }
         }
     },
