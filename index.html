@@ -27,9 +27,9 @@
 
     <section class="upLayer">
       <div class="showArea upLayerBox">
-        <input type="number" ref="numInput" placeholder="10" :value="showNum">
+        <input class="inputBox" type="number" ref="numInput" placeholder="10" :value="showNum">
         <div class="enterBtn btnStyle" @click="changeShowNum()">確認</div>
-        <p>在欄位輸入希望顯示筆數，並按下確認鍵送出(預設為10筆)</p>
+        <p class="text">在欄位輸入希望顯示筆數，並按下確認鍵送出(預設為10筆)</p>
       </div>
       <div class="pageArea upLayerBox">
         <!-- .prop的屬性在HTML上面是看不到的 -->
@@ -42,18 +42,22 @@
           <option v-for="areaName in area" :value="areaName">{{areaName}}</option>
         </select>
       </div>
+      <div class="infoArea upLayerBox">
+        <p class="text-xl">新北市Youbike API串接測試</p>
+        <p class="text-l text">本頁面每2分鐘更新資訊一次</p>
+      </div>
     </section>
 
     <section class="downLayer">
       <div class="dLeft">
         <div class="bikeInfoBox" v-for="item in bikeDataArray">
-          <p style="display:none;" data-name="sna">{{item.sna}}</p>
+          <p class="text-xl" style="display:none;" data-name="sna">{{item.sna}}</p>
           <p style="display:none;" data-name="sno">{{item.sno}}(站點代號)</p>
           <p style="display:none;" data-name="sarea">{{item.sarea}}</p>
           <p style="display:none;" data-name="ar">{{item.ar}}</p>
-          <p style="display:none;" data-name="sbi">{{item.sbi}}可借車數</p>
-          <p style="display:none;" data-name="bemp">{{item.bemp}}可還空位數</p>
-          <p style="display:none;" data-name="tot">{{item.tot}}總停車格</p>
+          <p class="text-l" style="display:none;" data-name="sbi">{{item.sbi}}可借車數</p>
+          <p class="text-l" style="display:none;" data-name="bemp">{{item.bemp}}可還空位數</p>
+          <p class="text-l" style="display:none;" data-name="tot">{{item.tot}}總停車格</p>
           <p style="display:none;" data-name="sareaen">{{item.sareaen}}</p>
           <p style="display:none;" data-name="snaen">{{item.snaen}}</p>
           <p style="display:none;" data-name="aren">{{item.aren}}</p>

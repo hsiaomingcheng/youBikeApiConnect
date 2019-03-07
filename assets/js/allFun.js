@@ -164,7 +164,7 @@ var startVue = new Vue({
 
             setInterval(function(){
                 _this.callAjax();
-            }, 100000);
+            }, 120000);
         },
         changeShowNum: function(){
             
@@ -237,7 +237,7 @@ var startVue = new Vue({
     mounted(){
         this.callAjax();
 
-        // this.timerAjax();
+        this.timerAjax();
     }
 });
 
