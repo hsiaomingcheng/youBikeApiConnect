@@ -1,14 +1,5 @@
-# 台北市Youtube API資料串接練習
-### 第一天的進度是 利用XHRHttpRequest(XHR)像對方要資料 再將要回來的資料都秀出來
-### 
-### 第二天的進度是 利用兩個陣列 一個放所有筆數資料(A) 一個則是放欲顯示筆數資料(B)
-### 透過 prevButton 跟 nextButton 動態的去跟A拿資料再放到B去顯示 拿資料的方法是用slice()
-###
-### 第三天把XHR的事情 抓出來放到methods裡面去 然後寫了一個動態顯示筆數的功能
-### 使用者現在可以在input輸入數字 透過使用者輸入的數字去決定顯示的筆數
-###
-### 目前遇到很大的問題就是我的request Header有問題
-### 導致我去抓新北市的youbikeApi時候 會要不到資料
-###
-### 然後還可以 預計做一個定時更新資料的功能
-### 最後希望把顯示的資料作成component 讓使用者可以透過勾選 去決定要顯示的內容
+# 新北市YouBike API資料串接練習
+
+https://hsiaomingcheng.github.io/youBikeApiConnect/
+
+想練習取得api資料，然後用vue印出
