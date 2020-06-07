@@ -22,7 +22,7 @@ act(場站是否暫停營運)
 
 
 Vue.component('check-box-area', {
-    data(){
+    data() {
         return {
             checkNames: [],
             ids: [
@@ -74,25 +74,25 @@ Vue.component('check-box-area', {
         }
     },
     methods: {
-        inputCheck: function(){
+        inputCheck: function () {
             // console.log(event.target.value);
 
-            var name  = '[data-name="'+ event.target.value +'"]',
+            var name = '[data-name="' + event.target.value + '"]',
                 named = document.querySelectorAll(name);
 
             var etValue = event.target.value;
 
             for (var index = 0; index < startVue.filed.length; index++) {
-                if ( startVue.filed[index] === etValue ) {
+                if (startVue.filed[index] === etValue) {
 
                     startVue.filed.splice(index, 1);
                     for (var index = 0; index < named.length; index++) {
                         named[index].style.display = "none";
                     }
                     return
-                }else if ( index + 1 == startVue.filed.length && startVue.filed[index] !== etValue ) {
+                } else if (index + 1 == startVue.filed.length && startVue.filed[index] !== etValue) {
 
-                    startVue.filed.push( etValue );
+                    startVue.filed.push(etValue);
                     for (var index = 0; index < named.length; index++) {
                         named[index].style.display = "block";
                     }
@@ -113,80 +113,78 @@ var startVue = new Vue({
         count: 0,           //現在數
         maxCount: '',       //最大數
         showNum: 10,        //想顯示的筆數(預設10筆),
-        filed: ['sna','sbi','bemp','tot'],     //顯示的欄位(預設sna可以看到)
+        filed: ['sna', 'sbi', 'bemp', 'tot'],     //顯示的欄位(預設sna可以看到)
         numInput: '',
         prev: 'prev',
         next: 'next',
         area: [
-            '全區域','板橋區','三重區','中和區','新莊區','永和區',
-            '新店區','土城區','蘆洲區','樹林區','汐止區','三峽區',
-            '淡水區','鶯歌區','五股區','泰山區','林口區','瑞芳區',
-            '深坑區','石碇區','坪林區','三芝區','石門區','八里區',
-            '平溪區','雙溪區','貢寮區','金山區','萬里區','烏來區',
+            '全區域', '板橋區', '三重區', '中和區', '新莊區', '永和區',
+            '新店區', '土城區', '蘆洲區', '樹林區', '汐止區', '三峽區',
+            '淡水區', '鶯歌區', '五股區', '泰山區', '林口區', '瑞芳區',
+            '深坑區', '石碇區', '坪林區', '三芝區', '石門區', '八里區',
+            '平溪區', '雙溪區', '貢寮區', '金山區', '萬里區', '烏來區',
         ]
     },
     methods: {
-        callAjax: function(){
+        callAjax: function () {
             var obj = '';
 
             axios
-            .get('https://script.google.com/macros/s/AKfycbxs3QX-GGwWZiGEloxDiuM81fu6IXidHesQEZaGinQ7YEbMmf0/exec?url=data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000352-001')
-            .then(function (response) {
-                // handle success
-                // console.log(response);
+                .get('https://script.google.com/macros/s/AKfycbxs3QX-GGwWZiGEloxDiuM81fu6IXidHesQEZaGinQ7YEbMmf0/exec?url=data.ntpc.gov.tw/api/datasets/71CD1490-A2DF-4198-BEF1-318479775E8A/json?size=999')
+                .then(function (response) {
 
-                obj = response.data;
+                    obj = response.data;
 
-                startVue.dataFileBox = obj.result.records;
-                startVue.dataFile    = startVue.dataFileBox;
+                    startVue.dataFileBox = obj;
+                    startVue.dataFile = startVue.dataFileBox;
 
-                if ( startVue.count == 0 ) {
-                    startVue.bikeDataArray = startVue.dataFileBox.slice(0, 10);
-                    startVue.maxCount = Math.floor( obj.result.total / 10 );
+                    if (startVue.count == 0) {
+                        startVue.bikeDataArray = startVue.dataFileBox.slice(0, 10);
+                        startVue.maxCount = Math.floor(obj.length / 10);
 
-                    //對預設顯示的欄位所對應的checkbox打勾
-                    var dRight = document.querySelector('.dRight'),
-                        li     = dRight.querySelectorAll('li');
+                        //對預設顯示的欄位所對應的checkbox打勾
+                        var dRight = document.querySelector('.dRight'),
+                            li = dRight.querySelectorAll('li');
 
-                    for (let index = 0; index < startVue.filed.length; index++) {
-                        dRight.querySelectorAll('li input[value="'+ startVue.filed[index] +'"]')[0].checked = true;
+                        for (let index = 0; index < startVue.filed.length; index++) {
+                            dRight.querySelectorAll('li input[value="' + startVue.filed[index] + '"]')[0].checked = true;
+                        }
                     }
-                }
 
-                setTimeout(function(){
-                    startVue.showFiledEvent();
-                }, 0);
-            });
+                    setTimeout(function () {
+                        startVue.showFiledEvent();
+                    }, 0);
+                });
         },
-        timerAjax: function(){
+        timerAjax: function () {
 
             var _this = this;
 
-            setInterval(function(){
+            setInterval(function () {
                 _this.callAjax();
             }, 120000);
         },
-        changeShowNum: function(){
-            
-            if ( this.$refs.numInput.value == '' ) {
+        changeShowNum: function () {
+
+            if (this.$refs.numInput.value == '') {
                 this.showNum = 0;
-            }else {
-                this.showNum = parseInt( this.$refs.numInput.value );
+            } else {
+                this.showNum = parseInt(this.$refs.numInput.value);
             }
 
-            this.maxCount = Math.floor( this.dataFile.length / this.showNum );
+            this.maxCount = Math.floor(this.dataFile.length / this.showNum);
 
             this.changeDataEvent();
         },
-        changeDataEvent: function(){
+        changeDataEvent: function () {
             //動態切換事件
             // this.bikeDataArray = this.dataFile.slice(10, 20);
 
             // `event` 是原生 DOM 事件
-            if ( event.target.control == 'prev' && this.count > 0 ) {
+            if (event.target.control == 'prev' && this.count > 0) {
                 this.count -= 1;
             }
-            if ( event.target.control == 'next' && this.maxCount > this.count ) {
+            if (event.target.control == 'next' && this.maxCount > this.count) {
                 this.count += 1;
             }
 
@@ -195,38 +193,38 @@ var startVue = new Vue({
 
             this.bikeDataArray = this.dataFile.slice(head, foot);
 
-            setTimeout(function(){
+            setTimeout(function () {
                 startVue.showFiledEvent();
             }, 0);
         },
-        selectDataEvent: function(){
+        selectDataEvent: function () {
             var tempArray = [],
-                sarea     = '',
-                value     = this.$refs.selectValue.value;
+                sarea = '',
+                value = this.$refs.selectValue.value;
 
-            if ( value == '全區域' ) {
+            if (value == '全區域') {
                 this.dataFile = this.dataFileBox;
                 this.changeDataEvent();
-            }else {
-                this.dataFileBox.forEach(function(currentValue, index, arr){
+            } else {
+                this.dataFileBox.forEach(function (currentValue, index, arr) {
                     sarea = currentValue.sarea;
-    
-                    if ( sarea == value ) {
+
+                    if (sarea == value) {
                         tempArray.push(arr[index]);
                     }
                 });
-    
+
                 this.dataFile = tempArray;
                 this.changeShowNum();
             }
         },
-        showFiledEvent: function(){
+        showFiledEvent: function () {
             //預設顯示欄位事件
             for (var index = 0; index < startVue.filed.length; index++) {
                 var dataName = startVue.filed[index];
 
-                var name  = '[data-name="'+ dataName +'"]',
-                    named = document.querySelectorAll( name );
+                var name = '[data-name="' + dataName + '"]',
+                    named = document.querySelectorAll(name);
 
                 for (var index2 = 0; index2 < named.length; index2++) {
                     named[index2].style.display = "block";
@@ -234,7 +232,7 @@ var startVue = new Vue({
             }
         }
     },
-    mounted(){
+    mounted() {
         this.callAjax();
 
         this.timerAjax();
